@@ -1,0 +1,30 @@
+{
+  "name": "omnipay-credomatic",
+  "type": "library",
+  "description": "Credomatic driver for the Omnipay payment processing library",
+  "keywords": [
+    "credomatic",
+    "gateway",
+    "merchant",
+    "omnipay",
+    "pay",
+    "payment"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Raffi Yeghiazaran",
+      "email": "raffiyeghiazaryan@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": { "Omnipay\\Credomatic\\" : "src/" }
+  },
+  "minimum-stability": "stable",
+  "require": {
+    "omnipay/common": "^3.0"
+  },
+  "require-dev": {
+    "omnipay/tests": "^3.0"
+  }
+}
