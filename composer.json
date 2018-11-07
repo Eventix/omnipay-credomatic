@@ -1,5 +1,5 @@
 {
-  "name": "omnipay-credomatic",
+  "name": "eventix/omnipay-credomatic",
   "type": "library",
   "description": "Credomatic driver for the Omnipay payment processing library",
   "keywords": [
