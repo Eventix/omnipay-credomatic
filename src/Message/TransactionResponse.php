@@ -60,6 +60,15 @@ class TransactionResponse extends AbstractResponse
         }
     }
 
+    public function getTransactionReference()
+    {
+        $data = $this->getData();
+
+        if (isset($data['transactionid'])) {
+            return $data['transactionid'];
+        }
+    }
+
     public function getAvsResponse()
     {
         $data = $this->getData();

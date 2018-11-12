@@ -75,7 +75,7 @@ class TransactionRequest extends AbstractRequest
     /**
      * @param $data
      *
-     * @return null|\Omnipay\Common\Message\ResponseInterface|HashResponse|TransactionResponse|\Psr\Http\Message\ResponseInterface
+     * @return null|\Omnipay\Common\Message\ResponseInterface|TransactionResponse|\Psr\Http\Message\ResponseInterface
      * @throws \Omnipay\Common\Exception\InvalidRequestException
      */
     public function sendData($data)
