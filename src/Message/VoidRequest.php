@@ -17,9 +17,19 @@ class VoidRequest extends AbstractRequest
      */
     public function getData()
     {
+        $this->validate(
+            'transactionid',
+            'key_id',
+            'redirect'
+        );
 
         return [
-            'type'=>$this->getType()
+            'type' => 'void',
+            'key_id' => $this->getKeyId(),
+            'hash' => $this->getHash(),
+            'transactionid' => $this->getTransactionId(),
+            'time' => $this->getTime(),
+            'redirect' => $this->getRedirect(),
         ];
     }
 
@@ -31,54 +41,6 @@ class VoidRequest extends AbstractRequest
      */
     public function sendData($data)
     {
-        $params = array(
-            $this->getOrderId(),
-            $this->getAmount(),
-            $this->getTime(),
-            $this->getKey()
-        );
-        $hashCode = $this->getHash($params);
-        $hash_data = array(
-            'key_id' => $this->getKeyId(),
-            'hash' => $hashCode
-        );
-        try {
-            $hashResponse = $this->httpClient->request('POST', $this->getEndpoint(), [], http_build_query($hash_data));
-        } catch (BadResponseException $e) {
-            $hashResponse = $e->getResponse();
-        }
-        $hashResponse = $hashResponse->getBody()->getContents();
-        $response = new HashResponse($this, $hashResponse);
-
-        if ($response->isSuccessful()) {
-            $params = array(
-                $response->getOrderId(),
-                $this->getAmount(),
-                $response->getResponse(),
-                $response->getTransactionId(),
-                $response->getAvsResponse(),
-                $response->getCvvResponse(),
-                $this->getTime(),
-                $this->getKey()
-            );
-
-            $data['key_id'] = $this->getKeyId();
-            $data['hash'] = $this->getHash($params);
-            $data['time'] = $this->getTime();
-            $data['redirect'] = $this->getRedirect();
-            $data['type'] = $this->getType();
-            $data['Transactionid']=$response->getTransactionId();
-            try {
-                $response = $this->httpClient->request('POST', $this->getEndpoint(), [], http_build_query($data));
-            } catch (BadResponseException $e) {
-                $response = $e->getResponse();
-            }
-
-            $result = $response->getBody()->getContents();
-            return new TransactionResponse($this, $result);
-        } else {
-            return $response;
-        }
-
+        return parent::sendData($data);
     }
 }

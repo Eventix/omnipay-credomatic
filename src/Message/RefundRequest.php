@@ -20,11 +20,20 @@ class RefundRequest extends AbstractRequest
     public function getData()
     {
         $this->validate(
-            'amount'
+            'amount',
+            'transactionid',
+            'key_id',
+            'redirect'
         );
+
         return [
+            'type' => 'refund',
+            'transactionid' => $this->getTransactionId(),
             'amount' => $this->getAmount(),
-            'transactionid' => $this->getTransactionId()
+            'carrier' => $this->getCarrier(),
+            'key_id' => $this->getKeyId(),
+            'hash' => $this->getHash(),
+            'time' => $this->getTime(),
         ];
     }
 
@@ -36,41 +45,7 @@ class RefundRequest extends AbstractRequest
      */
     public function sendData($data)
     {
-        $params = array(
-            $this->getOrderId(),
-            $this->getAmount(),
-            $this->getTime(),
-            $this->getKey()
-        );
-        $hashCode = $this->getHash($params);
-        $hashResponse = $this->httpClient->request('POST', $this->getEndpoint(), $hashCode);
-        $response = new HashResponse($this, $hashResponse);
-
-        $params = array(
-            $response->getOrderId(),
-            $this->getAmount(),
-            $response->getResponse(),
-            $response->getTransactionId(),
-            $response->getAvsResponse(),
-            $response->getCvvResponse(),
-            $this->getTime(),
-            $this->getKey()
-        );
-        $data['key_id'] = $this->getKeyId();
-        $data['hash'] = $this->getHash($params);
-        $data['time'] = $this->getTime();
-        $data['redirect'] = $this->getRedirect();
-        $data['type'] = 'refund';
-        $data['Transactionid']=$response->getTransactionId();
-
-        try {
-            $response = $this->httpClient->request('POST', $this->getEndpoint(), $data);
-        } catch (BadResponseException $e) {
-            $response = $e->getResponse();
-        }
-
-        $result = $response->getBody()->getContents();
-        return new TransactionResponse($this, $result);
+        return parent::sendData($data);
     }
 
 }

@@ -46,17 +46,17 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
     public function getOrderId()
     {
-        return $this->getParameter('orderId');
+        return $this->getParameter('orderid');
     }
 
     public function setOrderId($value)
     {
-        return $this->setParameter('orderId', $value);
+        return $this->setParameter('orderid', $value);
     }
 
     public function getRedirect()
     {
-        return $this->getParameter('redirect');
+        return urlencode($this->getParameter('redirect'));
     }
 
     public function setRedirect($value)
@@ -69,9 +69,12 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return 'POST';
     }
 
+    protected $currentTime = null;
     public function getTime()
     {
-        return time();
+        if(is_null($this->currentTime))
+            $this->currentTime = time();
+        return $this->currentTime;
     }
 
     public function getEndpoint()
@@ -79,84 +82,74 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->endpoint;
     }
 
-    public function getCardNumber()
-    {
-        return $this->getParameter('cardNumber');
-    }
-
-    public function setCardNumber($value)
-    {
-        return $this->setParameter('cardNumber', $value);
-    }
-
     public function getCcNumber()
     {
-        return $this->getParameter('ccNumber');
+        return $this->getParameter('ccnumber');
     }
 
     public function setCcNumber($value)
     {
-        return $this->setParameter('ccNumber', $value);
+        return $this->setParameter('ccnumber', $value);
     }
 
     public function getCcExp()
     {
-        return $this->getParameter('ccExp');
+        return $this->getParameter('ccexp');
     }
 
     public function setCcExp($value)
     {
-        return $this->setParameter('ccExp', $value);
+        return $this->setParameter('ccexp', $value);
     }
 
     public function getCheckName()
     {
-        return $this->getParameter('checkName');
+        return $this->getParameter('checkname');
     }
 
     public function setCheckName($value)
     {
-        return $this->setParameter('checkName', $value);
+        return $this->setParameter('checkname', $value);
     }
 
     public function getCheckAba()
     {
-        return $this->getParameter('checkAba');
+        return $this->getParameter('checkaba');
     }
 
     public function setCheckAba($value)
     {
-        return $this->setParameter('checkAba', $value);
+        return $this->setParameter('checkaba', $value);
     }
 
     public function getCheckAccount()
     {
-        return $this->getParameter('checkAccount');
+        return $this->getParameter('checkaccount');
     }
 
     public function setCheckAccount($value)
     {
-        return $this->setParameter('checkAccount', $value);
+        return $this->setParameter('checkaccount', $value);
     }
 
     public function getAccountHolderType()
     {
-        return $this->getParameter('accountHolderType');
+        return $this->getParameter('account_holder_type');
     }
 
     public function setAccountHolderType($value)
     {
-        return $this->setParameter('accountHolderType', $value);
+        return $this->setParameter('account_holder_type', $value);
     }
 
     public function getAccountType()
     {
-        return $this->getParameter('accountType');
+        return $this->getParameter('account_type');
     }
 
     public function setAccountType($value)
     {
-        return $this->setParameter('accountType', $value);
+        return $this->setParameter('account_type', $value);
     }
 
     public function getAmount()
@@ -179,27 +172,17 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->setParameter('cvv', $value);
     }
 
-    public function getProfuctSkuNo()
-    {
-        return $this->getParameter('productSkuNo');
-    }
-
-    public function setProductSkuNo($value)
-    {
-        return $this->setParameter('productSkuNo', $value);
-    }
-
     public function getOrderDescription()
     {
-        return $this->getParameter('orderDescription');
+        return $this->getParameter('orderdescription');
     }
 
     public function setOrderDescription($value)
     {
-        return $this->setParameter('orderDescription', $value);
+        return $this->setParameter('orderdescription', $value);
     }
 
-    public function getPaymnt()
+    public function getPayment()
     {
         return $this->getParameter('payment');
     }
@@ -211,12 +194,12 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
     public function getIpAddress()
     {
-        return $this->getParameter('ipAddress');
+        return $this->getParameter('ipaddress');
     }
 
     public function setIpAddress($value)
     {
-        return $this->setParameter('ipAddress', $value);
+        return $this->setParameter('ipaddress', $value);
     }
 
     public function getTax()
@@ -241,32 +224,32 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
     public function getPonNumber()
     {
-        return $this->getParameter('ponNumber');
+        return $this->getParameter('ponumber');
     }
 
     public function setPonNumber($value)
     {
-        return $this->setParameter('ponNumber', $value);
+        return $this->setParameter('ponumber', $value);
     }
 
     public function getFirstName()
     {
-        return $this->getParameter('firstName');
+        return $this->getParameter('firstname');
     }
 
     public function setFirstName($value)
     {
-        return $this->setParameter('firstName', $value);
+        return $this->setParameter('firstname', $value);
     }
 
     public function getLastName()
     {
-        return $this->getParameter('lastName');
+        return $this->getParameter('lastname');
     }
 
     public function setLastName($value)
     {
-        return $this->setParameter('lastName', $value);
+        return $this->setParameter('lastname', $value);
     }
 
 
@@ -382,107 +365,112 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
     public function getShippingFirstName()
     {
-        return $this->getParameter('shippingFirstName');
+        return $this->getParameter('shipping_firstname');
     }
 
     public function setShippingFirstName($value)
     {
-        return $this->setParameter('shippingFirstName', $value);
+        return $this->setParameter('shipping_firstname', $value);
     }
 
     public function getShippingLastName()
     {
-        return $this->getParameter('shippingLastName');
+        return $this->getParameter('shipping_lastname');
     }
 
     public function setShippingLastName($value)
     {
-        return $this->setParameter('shippingLastName', $value);
+        return $this->setParameter('shipping_lastname', $value);
     }
 
     public function getShippingCompany()
     {
-        return $this->getParameter('shippingCompany');
+        return $this->getParameter('shipping_company');
     }
 
     public function setShippingCompany($value)
     {
-        return $this->setParameter('shippingCompany', $value);
+        return $this->setParameter('shipping_company', $value);
     }
 
     public function getShippingAddress1()
     {
-        return $this->getParameter('shippingAddress1');
+        return $this->getParameter('shipping_address1');
     }
 
     public function setShippingAddress1($value)
     {
-        return $this->setParameter('shippingAddress1', $value);
+        return $this->setParameter('shipping_address1', $value);
     }
 
     public function getShippingAddress2()
     {
-        return $this->getParameter('shippingAddress2');
+        return $this->getParameter('shipping_address2');
     }
 
     public function setShippingAddress2($value)
     {
-        return $this->setParameter('shippingAddress2', $value);
+        return $this->setParameter('shipping_address2', $value);
     }
 
     public function getShippingCity()
     {
-        return $this->getParameter('shippingCity');
+        return $this->getParameter('shipping_city');
     }
 
     public function setShippingCity($value)
     {
-        return $this->setParameter('shippingCity', $value);
+        return $this->setParameter('shipping_city', $value);
     }
 
     public function getShippingState()
     {
-        return $this->getParameter('shippingState');
+        return $this->getParameter('shipping_state');
     }
 
     public function setShippingState($value)
     {
-        return $this->setParameter('shippingState', $value);
+        return $this->setParameter('shipping_state', $value);
     }
 
     public function getShippingZip()
     {
-        return $this->getParameter('shippingZip');
+        return $this->getParameter('shipping_zip');
     }
 
     public function setShippingZip($value)
     {
-        return $this->setParameter('shippingZip', $value);
+        return $this->setParameter('shipping_zip', $value);
     }
 
     public function getShippingCountry()
     {
-        return $this->getParameter('shippingCountry');
+        return $this->getParameter('shipping_country');
     }
 
     public function setShippingCountry($value)
     {
-        return $this->setParameter('shippingCountry', $value);
+        return $this->setParameter('shipping_country', $value);
     }
 
     public function getShippingEmail()
     {
-        return $this->getParameter('shippingEmail');
+        return $this->getParameter('shipping_email');
+    }
+
+    public function setShippingEmail($value)
+    {
+        return $this->setParameter('shipping_email', $value);
     }
 
     public function setTrackingNumber($value)
     {
-        return $this->setParameter('trackingNumber ', $value);
+        return $this->setParameter('trackingNumber', $value);
     }
 
     public function getTrackingNumber()
     {
-        return $this->getParameter('trackingNumber ');
+        return $this->getParameter('trackingNumber');
     }
     public function setCarrier($value)
     {
@@ -495,9 +483,15 @@ abstract class AbstractRequest extends BaseAbstractRequest
     }
 
 
-    protected function getHash($params)
+    public function getHash()
     {
-        $string = implode("|", $params);
+        $hashParams = array(
+            $this->getOrderId(),
+            $this->getAmount(),
+            $this->getTime(),
+            $this->getKey()
+        );
+        $string = implode("|", $hashParams);
         $hash = md5($string);
         return $hash;
     }
@@ -505,7 +499,7 @@ abstract class AbstractRequest extends BaseAbstractRequest
     public function sendData($data)
     {
         $body = $data ? $data : null;
-        $httpRequest = $this->httpClient->request($this->getHttpMethod(), $this->getEndpoint(), null, $body);
+        $httpRequest = $this->httpClient->request($this->getHttpMethod(), $this->getEndpoint(), ['Content-Type' => 'application/x-www-form-urlencoded'], http_build_query($data));
         $result = $httpRequest->getBody()->getContents();
         return new TransactionResponse($this, $result);
     }

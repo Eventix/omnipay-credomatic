@@ -19,14 +19,11 @@ class TransactionRequest extends AbstractRequest
     public function getData()
     {
         $this->validate(
-            'ccNumber',
-            'ccExp',
-            'checkName',
-            'checkAba',
-            'checkAccount',
-            'accountHolderType',
-            'accountType',
-            'amount'
+            'ccnumber',
+            'ccexp',
+            'amount',
+            'orderid',
+            'type'
         );
 
         return [
@@ -37,11 +34,13 @@ class TransactionRequest extends AbstractRequest
             'account_type' => $this->getAccountType(),
             'amount' => $this->getAmount(),
             'cvv' => $this->getCvv(),
-            'product_sku_#' => $this->getProfuctSkuNo(),
-            'payment' => $this->getPaymnt(),
+            'payment' => $this->getPayment(),
             'orderdescription' => $this->getOrderDescription(),
+            'orderid' => $this->getOrderId(),
             'ipaddress' => $this->getIpAddress(),
             'tax' => $this->getTax(),
+            'time' => $this->getTime(),
+            'type' => $this->getType(),
             'shipping' => $this->getShipping(),
             'ponnumber' => $this->getPonNumber(),
             'firstname' => $this->getFirstName(),
@@ -66,7 +65,10 @@ class TransactionRequest extends AbstractRequest
             'shipping_state' => $this->getShippingState(),
             'shipping_zip' => $this->getShippingZip(),
             'shipping_country' => $this->getShippingEmail(),
-            'shipping_email' => $this->getShippingEmail()
+            'shipping_email' => $this->getShippingEmail(),
+            'hash' => $this->getHash(),
+            'redirect' => $this->getRedirect(),
+            'key_id' => $this->getKeyId(),
         ];
     }
 
@@ -78,53 +80,6 @@ class TransactionRequest extends AbstractRequest
      */
     public function sendData($data)
     {
-        $params = array(
-            $this->getOrderId(),
-            $this->getAmount(),
-            $this->getTime(),
-            $this->getKey()
-        );
-        $hashCode = $this->getHash($params);
-        $hash_data = array(
-            'key_id' => $this->getKeyId(),
-            'hash' => $hashCode
-        );
-        try {
-            $hashResponse = $this->httpClient->request('POST', $this->getEndpoint(), [], http_build_query($hash_data));
-        } catch (BadResponseException $e) {
-            $hashResponse = $e->getResponse();
-        }
-        $hashResponse = $hashResponse->getBody()->getContents();
-        $response = new HashResponse($this, $hashResponse);
-
-        if ($response->isSuccessful()) {
-            $params = array(
-                $response->getOrderId(),
-                $this->getAmount(),
-                $response->getResponse(),
-                $response->getTransactionId(),
-                $response->getAvsResponse(),
-                $response->getCvvResponse(),
-                $this->getTime(),
-                $this->getKey()
-            );
-
-            $data['key_id'] = $this->getKeyId();
-            $data['hash'] = $this->getHash($params);
-            $data['time'] = $this->getTime();
-            $data['redirect'] = $this->getRedirect();
-            $data['type'] = $this->getType();
-            try {
-                $response = $this->httpClient->request('POST', $this->getEndpoint(), [], http_build_query($data));
-            } catch (BadResponseException $e) {
-                $response = $e->getResponse();
-            }
-
-            $result = $response->getBody()->getContents();
-            return new TransactionResponse($this, $result);
-        } else {
-            return $response;
-        }
-
+        return parent::sendData($data);
     }
 }

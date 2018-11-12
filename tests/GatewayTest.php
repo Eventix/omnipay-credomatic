@@ -38,15 +38,15 @@ class GatewayTest extends GatewayTestCase
         $this->gateway->setReturn('');
 
         $this->options = array(
-            'orderId' => rand(0, 999999),
+            'orderid' => rand(0, 999999),
             'amount' => '12.00',
-            'ccNumber' => '4111111111111111',
-            'ccExp' => '1220',
-            'checkName' => 'Test Name',
-            'checkAba' => '123654',
-            'checkAccount' => '1452368855',
-            'accountHolderType' => 'personal',
-            'accountType' => 'checking'
+            'ccnumber' => '4111111111111111',
+            'ccexp' => '1220',
+            'checkname' => 'Test Name',
+            'checkaba' => '123654',
+            'checkaccount' => '1452368855',
+            'accountholdertype' => 'personal',
+            'accounttype' => 'checking'
         );
     }
 
