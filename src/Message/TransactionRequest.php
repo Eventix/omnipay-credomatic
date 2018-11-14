@@ -66,7 +66,7 @@ class TransactionRequest extends AbstractRequest
             'shipping_zip' => $this->getShippingZip(),
             'shipping_country' => $this->getShippingEmail(),
             'shipping_email' => $this->getShippingEmail(),
-            'hash' => $this->getHash(),
+            'hash' => $this->createHash(),
             'redirect' => $this->getRedirect(),
             'key_id' => $this->getKeyId(),
         ];

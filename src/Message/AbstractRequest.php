@@ -82,6 +82,12 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->endpoint;
     }
 
+    public function setEndpoint($value)
+    {
+        $this->endpoint = $value;
+        return $this;
+    }
+
     public function getCcNumber()
     {
         return $this->getParameter('ccnumber');
@@ -174,12 +180,12 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
     public function getOrderDescription()
     {
-        return $this->getParameter('orderdescription');
+        return $this->getParameter('description');
     }
 
     public function setOrderDescription($value)
     {
-        return $this->setParameter('orderdescription', $value);
+        return $this->setParameter('description', $value);
     }
 
     public function getPayment()
@@ -482,8 +488,63 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->getParameter('carrier');
     }
 
+    public function getAction()
+    {
+        return $this->getParameter('action');
+    }
 
-    public function getHash()
+    public function setAction($value)
+    {
+        return $this->setParameter('action', $value);
+    }
+
+    public function getLanguage()
+    {
+        return $this->getParameter('language');
+    }
+
+    public function setLanguage($value)
+    {
+        return $this->setParameter('language', $value);
+    }
+
+    public function getResponse()
+    {
+        return $this->getParameter('response');
+    }
+
+    public function setResponse($value)
+    {
+        return $this->setParameter('response', $value);
+    }
+
+    public function getResponseText()
+    {
+        return $this->getParameter('responsetext');
+    }
+
+    public function setResponseText($value)
+    {
+        return $this->setParameter('responsetext', $value);
+    }
+
+    public function setHash($value){
+        return $this->setParameter('hash', $value);
+    }
+
+    public function getHash(){
+        return $this->getParameter('hash');
+    }
+
+    public function setReponseCode($value){
+        return $this->setParameter('reponse_code', $value);
+    }
+
+    public function getReponseCode(){
+        return $this->getParameter('reponse_code');
+    }
+
+    public function createHash()
     {
         $hashParams = array(
             $this->getOrderId(),
@@ -496,12 +557,18 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $hash;
     }
 
+    public function createQuickClickHash($data){
+        $stringToHash = implode('|', array_values($data)) . "|" . $this->getKey();
+        return implode("|", array_keys($data)) . "|" . md5($stringToHash);
+    }
+
     public function sendData($data)
     {
         $body = $data ? $data : null;
         $httpRequest = $this->httpClient->request($this->getHttpMethod(), $this->getEndpoint(), ['Content-Type' => 'application/x-www-form-urlencoded'], http_build_query($data));
-        $result = $httpRequest->getBody()->getContents();
-        return new TransactionResponse($this, $result);
+        $content = $httpRequest->getBody()->getContents();
+        parse_str($content, $data);
+        return new TransactionResponse($this, $data);
     }
 
     protected function createResponse($data)

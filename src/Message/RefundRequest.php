@@ -32,7 +32,7 @@ class RefundRequest extends AbstractRequest
             'amount' => $this->getAmount(),
             'carrier' => $this->getCarrier(),
             'key_id' => $this->getKeyId(),
-            'hash' => $this->getHash(),
+            'hash' => $this->createHash(),
             'time' => $this->getTime(),
         ];
     }

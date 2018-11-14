@@ -26,7 +26,7 @@ class VoidRequest extends AbstractRequest
         return [
             'type' => 'void',
             'key_id' => $this->getKeyId(),
-            'hash' => $this->getHash(),
+            'hash' => $this->createHash(),
             'transactionid' => $this->getTransactionId(),
             'time' => $this->getTime(),
             'redirect' => $this->getRedirect(),
@@ -36,7 +36,7 @@ class VoidRequest extends AbstractRequest
     /**
      * @param $data
      *
-     * @return null|\Omnipay\Common\Message\ResponseInterface|TransactionResponse|\Psr\Http\Message\ResponseInterface
+     * @return null|\Omnipay\Common\Message\ResponseInterface|HashResponse|TransactionResponse|\Psr\Http\Message\ResponseInterface
      * @throws \Omnipay\Common\Exception\InvalidRequestException
      */
     public function sendData($data)

@@ -9,8 +9,10 @@
 namespace Omnipay\Credomatic;
 
 use Omnipay\Common\AbstractGateway;
+use Omnipay\Credomatic\Message\fetchTransactionRequest;
 use Omnipay\Credomatic\Message\TransactionRequest;
 use Omnipay\Credomatic\Message\RefundRequest;
+use Omnipay\Credomatic\Message\QuickClickTransactionRequest;
 
 class Gateway extends AbstractGateway
 {
@@ -22,11 +24,9 @@ class Gateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
-            'key_id' => '10316620',
-            'key' => 'US4AA6JD43Qc89hSF33ytAe8f2zfx354',
-            'testMode' => true,
-            'return' => '',
-            'type'
+            'key_id' => null,
+            'key' => null,
+            'language' => 'en'
         );
     }
 
@@ -60,6 +60,21 @@ class Gateway extends AbstractGateway
         return $this->setParameter('return', $value);
     }
 
+    public function setReturnUrl($value)
+    {
+        return $this->setParameter('url_finish', $value);
+    }
+
+    public function getAction()
+    {
+        return $this->getParameter('action');
+    }
+
+    public function setAction($value)
+    {
+        return $this->setParameter('action', $value);
+    }
+
     public function getType()
     {
         return $this->getParameter('type');
@@ -75,10 +90,21 @@ class Gateway extends AbstractGateway
         return $this->createRequest(TransactionRequest::class, $parameters);
     }
 
+    public function quickClick(array $parameters = array())
+    {
+        return $this->createRequest(QuickClickTransactionRequest::class, $parameters);
+    }
+
     public function withdraw(array $parameters = array())
     {
         return $this->createRequest(RefundRequest::class, $parameters);
     }
+
+    public function fetch(array $parameters = array())
+    {
+        return $this->createRequest(fetchTransactionRequest::class, $parameters);
+    }
+
 
 
 

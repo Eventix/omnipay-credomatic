@@ -28,7 +28,7 @@ class CaptureRequest extends AbstractRequest
             'type' => 'capture',
             'amount' => $this->getAmount(),
             'key_id' => $this->getKeyId(),
-            'hash' => $this->getHash(),
+            'hash' => $this->createHash(),
             'redirect' => $this->getRedirect(),
             'transactionid' => $this->getTransactionId(),
             'time' => $this->getTime(),
@@ -38,7 +38,7 @@ class CaptureRequest extends AbstractRequest
     /**
      * @param $data
      *
-     * @return null|\Omnipay\Common\Message\ResponseInterface|TransactionResponse|\Psr\Http\Message\ResponseInterface
+     * @return null|\Omnipay\Common\Message\ResponseInterface|HashResponse|TransactionResponse|\Psr\Http\Message\ResponseInterface
      * @throws \Omnipay\Common\Exception\InvalidRequestException
      */
     public function sendData($data)

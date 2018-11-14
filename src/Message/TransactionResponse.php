@@ -69,6 +69,27 @@ class TransactionResponse extends AbstractResponse
         }
     }
 
+    public function getResponseCode(){
+        $data = $this->getData();
+
+        if (isset($data['response_code'])) {
+            return $data['response_code'];
+        }
+    }
+
+    public function getResponseText(){
+        $data = $this->getData();
+
+        if (isset($data['responsetext'])) {
+            return $data['responsetext'];
+        }
+    }
+
+    public function getMessage()
+    {
+        $this->getResponseText();
+    }
+
     public function getAvsResponse()
     {
         $data = $this->getData();
@@ -122,33 +143,7 @@ class TransactionResponse extends AbstractResponse
     public function getData()
     {
         $data = $this->data;
-        $params = array(
-            "response=",
-            "responsetext=",
-            "authcode=",
-            "transactionid=",
-            "hash=",
-            "avs",
-            "cvv",
-            "orderid=",
-            "type=",
-            "response_code="
-        );
-        $string = str_replace($params, '', $data);
-        $values = explode('&', $string);
-
-        $result = array(
-            "response" => $values[0],
-            "responsetext" => $values[1],
-            "authcode" => $values[2],
-            "transactionid" => $values[3],
-            "avsresponse" => $values[4],
-            "cvvresponse" => $values[5],
-            "orderid" => $values[6],
-            "type" => $values[7],
-            "response_code" => $values[8]
-        );
-        return $result;
+        return $data;
 
     }
 
