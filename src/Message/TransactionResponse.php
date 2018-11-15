@@ -87,7 +87,7 @@ class TransactionResponse extends AbstractResponse
 
     public function getMessage()
     {
-        $this->getResponseText();
+        return $this->getResponseText();
     }
 
     public function getAvsResponse()
