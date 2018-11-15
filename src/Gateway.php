@@ -85,7 +85,7 @@ class Gateway extends AbstractGateway
         return $this->setParameter('type', $value);
     }
 
-    public function transaction(array $parameters = array())
+    public function purchase(array $parameters = array())
     {
         return $this->createRequest(TransactionRequest::class, $parameters);
     }
@@ -95,7 +95,7 @@ class Gateway extends AbstractGateway
         return $this->createRequest(QuickClickTransactionRequest::class, $parameters);
     }
 
-    public function withdraw(array $parameters = array())
+    public function refund(array $parameters = array())
     {
         return $this->createRequest(RefundRequest::class, $parameters);
     }
